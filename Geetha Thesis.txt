@@ -1,0 +1,82 @@
+1. Introduction and Motivation
+--Position the thesis as an exploration of real-time network data analysis 
+for intrusion detection.
+
+--- Highlight how the NF-UQ-NIDS-v2 dataset, with its extensive volume and 
+variety, enables real-world simulation and data-driven insights.
+
+--- Emphasize the data analytics aspect, such as handling big data, 
+feature extraction, model development, and real-time processing.
+
+Thesis Problem Statement:
+
+"Developing a data-driven, real-time network intrusion detection system using
+machine learning techniques to classify and detect anomalies within 
+large-scale network traffic, 
+leveraging the NF-UQ-NIDS-v2 dataset to identify diverse attack patterns 
+and improve intrusion response accuracy and efficiency."
+
+
+CRISP-DM Phases and Progress
+Business Understanding:
+
+Objective: Identify and detect network intrusions in real-time.
+Goal Setting: Develop a machine learning model to classify network traffic as normal or malicious, based on the NF-UQ-NIDS-v2 dataset.
+Data Understanding:
+
+Data Loading and Initial Inspection: We've loaded the dataset and begun inspecting the schema to understand data structure.
+Key Feature Identification: Analyzed the schema to recognize important columns (e.g., IPV4_SRC_ADDR, L4_SRC_PORT, PROTOCOL, Label, Attack) for intrusion detection.
+Data Preparation (in progress):
+
+This is where we will conduct data cleaning, handle missing values, encode categorical variables, and select features for modeling.
+Modeling (upcoming):
+
+We’ll select and train machine learning models based on the prepared dataset.
+Evaluation (upcoming):
+
+Evaluate model performance with accuracy, precision, recall, F1-score, etc., to ensure the model meets the project's objectives.
+Deployment (upcoming, if applicable):
+
+Set up the model for real-time detection or save it for future deployment.
+
+2. Anomaly Detection via Temporal Flow Analysis for Early Threat Prediction
+Problem Statement: "Investigate temporal patterns in network traffic flow to
+ develop a predictive model capable of early-stage detection of anomalous 
+ behaviors, with a focus on high-frequency attacks such as DDoS and brute-
+force."Rationale: Using fields like FLOW_DURATION_MILLISECONDS, IN_BYTES, 
+and IN_PKTS, this thesis would focus on developing time-series models to 
+detect traffic anomalies and predict potential intrusions before they escalate.
+Unique Angle: Time-based anomaly detection allows for early threat identification,
+enhancing the speed and reliability of network defenses—an area well-suited for
+deep learning techniques in time-series analysis.
+
+Thesis-Level Complexity: This option uses time-series analysis or temporal 
+pattern recognition, which adds complexity due to the need to capture and 
+interpret time-based data trends accurately. Early-stage threat prediction 
+also implies predictive modeling, which requires advanced analytics skills.
+
+Data Analytics Focus: By focusing on high-frequency attacks like DDoS and 
+brute force, you will need to apply methods like recurrent neural networks 
+(RNNs), autoencoders for anomaly detection, or other time-series 
+models—techniques squarely within the realm of advanced data analytics.
+
+1. Multi-Environment Attack Detection Optimization
+Problem Statement: "Develop and evaluate an adaptive machine learning 
+framework that optimizes network intrusion detection across multiple network
+environments, utilizing dataset labels to analyze and predict attack patterns
+under varying network configurations."
+Rationale: This project leverages the dataset’s unique environment labels to 
+understand how intrusion detection models perform across different network 
+setups. By optimizing a model that adapts to different conditions, you can 
+create a generalized solution for network anomaly detection, a task requiring advanced analytics techniques and adaptability.
+Unique Angle: Cross-environment analysis to understand feature and model 
+adaptability across network configurations, which is rarely explored in 
+standard intrusion detection
+
+Thesis-Level Complexity: This problem requires you to dive deep into the 
+adaptability and generalizability of machine learning models across different
+ network environments, a complex task involving advanced analytics techniques.
+ 
+Data Analytics Focus: You’ll employ comparative analysis, feature selection, 
+and possibly even domain adaptation or transfer learning techniques to adapt 
+models across environments.
