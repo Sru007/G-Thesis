@@ -14,7 +14,18 @@
  
  sbin/start-worker.sh spark://hadoop-vm-1:7077
  
- spark-submit --master spark://hadoop-vm-1:7077 di-project.py
+ spark-submit --master spark://hadoop-vm-1:7077 
+ 
+ /usr/local/hadoop/sbin/start-dfs.sh
+ /usr/local/hadoop/sbin/start-yarn.sh
+ 
+ 
+ /opt/spark/spark-3.4.4-bin-hadoop3/sbin/stop-master.sh
+ /opt/spark/spark-3.4.4-bin-hadoop3/sbin/stop-worker.sh
+ 
+ /opt/spark/spark-3.4.4-bin-hadoop3/sbin/start-master.sh
+ /opt/spark/spark-3.4.4-bin-hadoop3/sbin/start-worker.sh spark://hadoop:7077
+ 
  
  root@hadoop-vm-1:/usr/local/hadoop/etc/hadoop#
 root@hadoop-vm-1:/usr/local/hadoop/etc/hadoop# cat core-site.xml
