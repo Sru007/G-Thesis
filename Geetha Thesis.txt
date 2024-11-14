@@ -191,7 +191,9 @@ The thresholds 1e6 and 1e8 represent a balance between capturing a realistic upp
 
 
 
+# Why Random Forest ?
 
+you could explain that Random Forest is combining multiple decision trees to accurately classify network flows as normal or anomalous by learning patterns in the features. Each tree contributes its perspective, and by aggregating their predictions, the Random Forest model reduces errors and identifies complex relationships in network traffic data. This approach allowed it to achieve high accuracy, as it can capture subtle patterns in the traffic data that distinguish normal activity from potential intrusions.
 
 
 
