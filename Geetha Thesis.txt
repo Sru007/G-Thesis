@@ -170,6 +170,30 @@ Consistency: By capping values at upper thresholds, we avoid overly large number
 Model Robustness: Machine learning models can be sensitive to extreme values. Capping prevents these outliers from disproportionately influencing model training.
 Detection of Anomalous Patterns: Capped values help distinguish between legitimate data points and suspiciously high traffic that might signify intrusions.
 
+The choice of thresholds like 1e6 (1 million) and 1e8 (100 million) for capping in network traffic analysis is based on balancing between normal traffic limits and the need to capture anomalies without allowing exceptionally high values to skew results. Here’s how to justify these numbers effectively:
+
+1. Domain Knowledge and Typical Network Traffic
+In network security, typical data transfers or packet sizes vary widely depending on the type of network, device, or protocol. However:
+1 MB (1e6 bytes): Commonly, network traffic for individual flows tends to remain below 1 MB. Larger packets may signal more intensive file transfers or unusual activity.
+100 MB (1e8 bytes): This higher threshold for throughput is designed to allow for more significant data transfers but still cap rare cases like sustained high-throughput streams, which might indicate Distributed Denial of Service (DDoS) attacks or data exfiltration attempts.
+These values are chosen to tolerate occasional high-volume traffic typical in legitimate network activities (like file backups or video streaming) without allowing excessively high values that would be uncommon in most network scenarios.
+2. Thresholds for Anomaly Detection
+1 MB (1e6 bytes) and 100 MB (1e8 bytes) are generous upper bounds, ensuring that the model still identifies genuine network traffic spikes but doesn’t skew due to infrequent, extremely high outliers.
+Without capping, values in the hundreds of megabytes or even gigabytes could distort averages and variances, making it harder to detect true anomalies.
+3. Experimental and Practical Standards
+In anomaly detection, thresholds often derive from practical experience or observed data distributions. In preliminary analysis, if the bulk of network flows are well below these values, but a few extreme values are much higher, these limits help isolate those extremes without affecting the main dataset.
+You could also explain that these values serve as initial baselines; if deeper analysis of the data shows patterns warranting adjustment, they can be refined.
+4. Comparable Studies and Industry Standards
+Many industry and academic studies of network traffic utilize similar thresholds in the low megabyte to hundred-megabyte range for anomaly detection in average organizational networks. These values help identify unusual behaviors associated with malware or attacks while maintaining sensitivity to typical network traffic.
+In Summary
+The thresholds 1e6 and 1e8 represent a balance between capturing a realistic upper bound of traffic for general networks and ensuring robust anomaly detection without skewing by extreme values. This allows the model to focus on identifying unusual patterns in high-frequency data, essential for timely and accurate detection of network anomalies.
+
+
+
+
+
+
+
 
 
 
