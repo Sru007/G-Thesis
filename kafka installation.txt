@@ -1,0 +1,151 @@
+sudo apt update
+sudo apt install -y openjdk-11-jdk
+
+tar -xzf kafka....gzp
+
+mv kafka... /opt/kafka/
+
+
+
+/opt/kafka_2.13-3.7.1/bin/kafka-topics.sh --list --bootstrap-server 10.128.0.7:9092
+
+ /opt/kafka_2.13-3.7.1/bin/kafka-console-consumer.sh --bootstrap-server 10.128.0.7:9092 --topic Mythesis-Syslogs --from-beginning
+ 
+ /opt/kafka_2.13-3.7.1/bin/kafka-topics.sh --delete --topic My_kernellog --bootstrap-server 10.128.0.7:9092
+ 
+ root@kafka:~# cat /opt/kafka_2.13-3.7.1/config/server.properties
+# The id of the broker instance, it should be unique for each broker
+broker.id=0
+
+# Enable deletion of topic (optional)
+delete.topic.enable=true
+
+# The port on which the Kafka server will listen
+listeners=PLAINTEXT://:9092
+
+# Hostname and port the broker will advertise to producers and consumers.
+advertised.listeners=PLAINTEXT://10.128.0.7:9092
+
+# Number of network threads to handle network requests
+num.network.threads=3
+
+# Number of I/O threads that will handle disk access
+num.io.threads=8
+
+# The directory where Kafka will store log data
+log.dirs=/var/lib/kafka/logs
+
+# The number of messages to accept before forcing a flush of data to disk
+log.flush.interval.messages=10000
+
+# The maximum time in ms that a message can sit in a log before we force a flush
+log.flush.interval.ms=1000
+
+# The minimum size of a log file to be cleaned
+log.segment.bytes=1073741824 
+
+# The frequency in minutes a log cleaner checks whether any log is eligible for deletion
+log.retention.check.interval.ms=300000
+
+# The default number of log partitions per topic
+num.partitions=1 
+
+# How long Kafka topics should retain data before deleting it.
+log.retention.hours=168
+
+# Maximum size of the log before deleting it
+log.retention.bytes=10737418240
+
+# The interval at which log segments are checked to see if they can be deleted according
+# to the retention policies
+log.retention.check.interval.ms=300000
+
+# Zookeeper connection string (assuming Zookeeper is running on the same VM)
+zookeeper.connect=localhost:2181
+
+# Timeout in ms for connecting to zookeeper
+zookeeper.connection.timeout.ms=6000
+
+# Replication factors for internal management topics
+offsets.topic.replication.factor=1
+transaction.state.log.replication.factor=1
+transaction.state.log.min.isr=1
+
+
+root@kafka:~# cat /opt/kafka_2.13-3.7.1/config/consumer.properties
+# Specify the list of brokers in the Kafka cluster to connect to
+bootstrap.servers=10.128.0.7:9092
+
+# Specify the group id for this consumer
+group.id=my-consumer-group
+
+# Key deserializer class for key
+key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+# Value deserializer class for value
+value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+# If true, the consumer's offset will be periodically committed in the background.
+enable.auto.commit=true
+
+# The frequency in milliseconds that the consumer offsets are auto-committed to Kafka if enable.auto.commit is set to true
+auto.commit.interval.ms=1000
+
+# What to do when there is no initial offset in Kafka or if the current offset does not exist any more on the server
+auto.offset.reset=earliest
+
+root@kafka:/opt/kafka_2.13-3.7.1# cat config/zookeeper.properties
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# the directory where the snapshot is stored.
+dataDir=/opt/kafka_2.13-3.7.1/zookeeper/
+# the port at which the clients will connect
+clientPort=2181
+# disable the per-ip limit on the number of connections since this is a non-production config
+maxClientCnxns=0
+# Disable the adminserver by default to avoid port conflicts.
+# Set the port to something non-conflicting if choosing to enable this
+admin.enableServer=false
+# admin.serverPort=8080
+
+
+root@kafka:~# cat /etc/systemd/system/kafka.service
+[Unit]
+Description=Apache Kafka Service
+Requires=zookeeper.service
+After=zookeeper.service
+
+[Service]
+Type=simple
+ExecStart=/opt/kafka_2.13-3.7.1/bin/kafka-server-start.sh /opt/kafka_2.13-3.7.1/config/server.properties
+ExecStop=/opt/kafka_2.13-3.7.1/bin/kafka-server-stop.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=ZooKeeper Service
+Requires=network.target
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/kafka_2.13-3.7.1/bin/zookeeper-server-start.sh /opt/kafka_2.13-3.7.1/config/zookeeper.properties
+ExecStop=/opt/kafka_2.13-3.7.1/bin/zookeeper-server-stop.sh
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target

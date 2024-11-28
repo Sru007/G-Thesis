@@ -1,0 +1,66 @@
+
+curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
+
+[INPUT]
+    Name         tail
+    Path         /var/log/syslog
+    Tag          syslog
+    DB           /var/log/flb_syslog.db
+    Read_from_Head true
+
+[INPUT]
+    Name         tail
+    Path         /var/log/auth.log
+    Tag          authlog
+    DB           /var/log/flb_authlog.db
+    Read_from_Head true
+
+[INPUT]
+    Name         tail
+    Path         /var/log/ufw.log
+    Tag          ufwlog
+    DB           /var/log/flb_ufwlog.db
+    Read_from_Head true
+
+[INPUT]
+    Name         tail
+    Path         /var/log/kern.log
+    Tag          kernellog
+    DB           /var/log/flb_kernellog.db
+    Read_from_Head true
+
+[OUTPUT]
+    Name          kafka
+    Match         syslog
+    Brokers       10.128.0.7:9092
+    Topics        My_syslog
+    rdkafka.request.required.acks 1
+    rdkafka.log_level 6
+    rdkafka.message.timeout.ms 5000
+
+[OUTPUT]
+    Name          kafka
+    Match         authlog
+    Brokers       10.128.0.7:9092
+    Topics        My_authlog
+    rdkafka.request.required.acks 1
+    rdkafka.log_level 6
+    rdkafka.message.timeout.ms 5000
+
+[OUTPUT]
+    Name          kafka
+    Match         ufwlog
+    Brokers       10.128.0.7:9092
+    Topics        My_ufwlog
+    rdkafka.request.required.acks 1
+    rdkafka.log_level 6
+    rdkafka.message.timeout.ms 5000
+
+[OUTPUT]
+    Name          kafka
+    Match         kernellog
+    Brokers       10.128.0.7:9092
+    Topics        My_kernellog
+    rdkafka.request.required.acks 1
+    rdkafka.log_level 6
+    rdkafka.message.timeout.ms 5000
