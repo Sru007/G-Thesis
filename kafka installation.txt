@@ -5,14 +5,20 @@ tar -xzf kafka....gzp
 
 mv kafka... /opt/kafka/
 
+/opt/kafka_2.13-3.7.1/bin/kafka-consumer-groups.sh --bootstrap-server 10.128.0.9:9092 --group auth_group-test-5 --describe
 
+/opt/kafka_2.13-3.7.1/bin/kafka-topics.sh --list --bootstrap-server 10.128.0.9:9092
 
-/opt/kafka_2.13-3.7.1/bin/kafka-topics.sh --list --bootstrap-server 10.128.0.7:9092
+ /opt/kafka_2.13-3.7.1/bin/kafka-console-consumer.sh --bootstrap-server 10.128.0.9:9092 --topic Mythesis-Syslogs --from-beginning
 
- /opt/kafka_2.13-3.7.1/bin/kafka-console-consumer.sh --bootstrap-server 10.128.0.7:9092 --topic Mythesis-Syslogs --from-beginning
+/opt/kafka_2.13-3.7.1/bin/kafka-consumer-groups.sh --list --bootstrap-server 10.128.0.9:9092
+
  
- /opt/kafka_2.13-3.7.1/bin/kafka-topics.sh --delete --topic My_kernellog --bootstrap-server 10.128.0.7:9092
+ /opt/kafka_2.13-3.7.1/bin/kafka-topics.sh --delete --topic My_kernellog --bootstrap-server 10.128.0.9:9092
  
+ /opt/kafka_2.13-3.7.1/bin/kafka-consumer-groups.sh --bootstrap-server 10.128.0.9:9092 --delete --group <consumer_group_id>
+
+
  root@kafka:~# cat /opt/kafka_2.13-3.7.1/config/server.properties
 # The id of the broker instance, it should be unique for each broker
 broker.id=0

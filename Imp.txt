@@ -139,3 +139,4 @@ PermitRootLogin no
 AllowUsers sahithidornala_1999
 AllowUsers srujith
 LogLevel VERBOSE
+ user "username", name="username", user="username", and password for "username".

@@ -1,0 +1,36 @@
+mysql -u srujith -p
+USE auth_data;
+DROP TABLE auth_logs;
+
+
+
+
+CREATE DATABASE auth_data;
+
+GRANT ALL PRIVILEGES ON auth_data.* TO 'srujith'@'%';
+FLUSH PRIVILEGES;
+
+SELECT log,user  FROM auth_logs  WHERE user IS NULL    AND log LIKE '%srujith%';
+
+use auth_data
+
+CREATE TABLE auth_logs (
+    log VARCHAR(500),
+    timestamp DATETIME,
+    event_outcome VARCHAR(50),
+    user VARCHAR(50),
+    IP VARCHAR(30),
+    port INT,
+    `partition` INT,
+	offset INT,
+    part_offset VARCHAR(255),
+    PRIMARY KEY (part_offset)
+);
+
+
+
+
+
+ALTER USER 'srujith'@'localhost' IDENTIFIED BY 'srujith@123';
+
+ALTER USER 'srujith'@'%' IDENTIFIED BY 'srujith@123';
